@@ -1,0 +1,69 @@
+<div class="container mt-4">
+  @if (loading) {
+    <div class="text-center">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+    </div>
+  }
+
+  @if (!loading && property) {
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card mb-4">
+          <img
+            [src]="property.imagen_principal || 'https://via.placeholder.com/800x400'"
+            class="card-img-top"
+            [alt]="property.detalle"
+            style="height: 400px; object-fit: cover;">
+
+          <div class="card-body">
+            <h1 class="card-title h2">{{ property.detalle }}</h1>
+            <p class="text-muted">
+              <i class="bi bi-geo-alt"></i> {{ property.ciudad }}
+            </p>
+
+            <div class="d-flex gap-4 mb-3">
+              <span class="text-primary">
+                <i class="bi bi-house-door"></i> {{ property.habitaciones }} hab.
+              </span>
+              <span class="text-primary">
+                <i class="bi bi-droplet"></i> {{ property.banios }} baños
+              </span>
+            </div>
+
+            <h3 class="text-primary mb-3">
+              {{ property.tipo_transaccion === 'venta' ? 'Venta' : 'Arriendo' }}:
+              ${{ property.precio | number }}
+            </h3>
+
+            <p class="card-text">{{ property.descripcion }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h5 class="mb-0">Características</h5>
+          </div>
+          <div class="card-body">
+            @for (feature of property.caracteristicas; track $index) {
+              <span class="badge bg-primary me-1 mb-1">{{ feature }}</span>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (!loading && !property) {
+    <div class="alert alert-warning text-center">
+      <h4>Propiedad no encontrada</h4>
+      <p>La propiedad que buscas no existe o no está disponible.</p>
+      <a routerLink="/propiedades" class="btn btn-primary">
+        Volver a propiedades
+      </a>
+    </div>
+  }
+</div>
