@@ -7,7 +7,7 @@
     <div class="mb-3">
       <label class="form-label">Ciudad</label>
       <select class="form-select" [(ngModel)]="filters.ciudad_id" (ngModelChange)="applyFilters()">
-        <option [value]="">Todas las ciudades</option>
+        <option [value]="undefined">Todas las ciudades</option>
         <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
       </select>
     </div>
@@ -16,7 +16,7 @@
     <div class="mb-3">
       <label class="form-label">Tipo de Transacción</label>
       <select class="form-select" [(ngModel)]="filters.tipo_transaccion" (ngModelChange)="applyFilters()">
-        <option [value]="">Todos los tipos</option>
+        <option [value]="undefined">Todos los tipos</option>
         <option *ngFor="let type of transactionTypes" [value]="type.value">{{ type.label }}</option>
       </select>
     </div>

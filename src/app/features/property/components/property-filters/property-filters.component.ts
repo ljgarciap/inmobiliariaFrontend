@@ -65,8 +65,18 @@ export class PropertyFiltersComponent implements OnInit {
   }
 
   applyFilters() {
-    // Emitir copia del objeto para evitar mutaciones
-    this.filtersChange.emit({...this.filters});
+  const cleanedFilters: { [key: string]: string | number | number[] } = {};
+
+  Object.keys(this.filters).forEach(key => {
+    const value = this.filters[key as keyof PropertyFilters];
+
+    if (value !== undefined && value !== null && value !== '' &&
+        value !== 'Todas las ciudades' && value !== 'Todos los tipos') {
+      cleanedFilters[key] = value;
+    }
+  });
+
+  this.filtersChange.emit(cleanedFilters as PropertyFilters);
   }
 
   clearFilters() {

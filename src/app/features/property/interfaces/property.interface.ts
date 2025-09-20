@@ -32,3 +32,23 @@ export interface PropertyFilters {
   caracteristicas?: number[];
   page?: number;
 }
+
+export interface PropertyApiResponse {
+  data: Property[];
+  links?: {
+    first: string;
+    last: string;
+    prev: string | null;
+    next: string | null;
+  };
+  meta?: {
+    current_page: number;
+    from: number;
+    last_page: number;
+    links: any[];
+    path: string;
+    per_page: number;
+    to: number;
+    total: number;
+  };
+}

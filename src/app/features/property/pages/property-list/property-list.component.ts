@@ -40,9 +40,8 @@ export class PropertyListComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error loading properties:', error);
-        this.error = 'No se pudieron cargar las propiedades. Verifica que el backend esté corriendo.';
+        this.error = 'Error cargando propiedades';
         this.loading = false;
-        this.properties = [];
       }
     });
   }

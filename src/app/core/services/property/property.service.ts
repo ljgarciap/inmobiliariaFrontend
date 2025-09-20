@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { Property, PropertyFilters } from '../../../features/property/interfaces/property.interface';
+import { Property, PropertyApiResponse, PropertyFilters } from '../../../features/property/interfaces/property.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -12,25 +12,29 @@ export class PropertyService {
 
   constructor(private http: HttpClient) {}
 
-  getProperties(filters?: PropertyFilters): Observable<{ data: Property[] }> {
-    let params = new HttpParams();
+  getProperties(filters?: PropertyFilters): Observable<PropertyApiResponse> {
+  let params = new HttpParams();
 
-    if (filters) {
-      Object.keys(filters).forEach(key => {
-        const value = filters[key as keyof PropertyFilters];
-        if (value !== undefined && value !== null && value !== '') {
-          if (Array.isArray(value)) {
-            if (value.length > 0) {
-              params = params.set(key, value.join(','));
-            }
-          } else {
-            params = params.set(key, value.toString());
+  if (filters) {
+    Object.keys(filters).forEach(key => {
+      const value = filters[key as keyof PropertyFilters];
+
+      if (value !== undefined && value !== null && value !== '') {
+        if (Array.isArray(value)) {
+          if (value.length > 0) {
+            params = params.set(key, value.join(','));
+          }
+        } else {
+          const stringValue = String(value);
+          if (stringValue !== 'undefined' && stringValue !== 'null') {
+            params = params.set(key, stringValue);
           }
         }
-      });
-    }
-
-    return this.http.get<{ data: Property[] }>(`${this.baseUrl}/propiedades`, { params });
+      }
+    });
+  }
+  console.log('Params enviados:', params.toString());
+  return this.http.get<PropertyApiResponse>(`${this.baseUrl}/propiedades`, { params });
   }
 
   getPropertyById(id: number): Observable<{ data: Property }> {
