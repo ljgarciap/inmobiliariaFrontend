@@ -1,0 +1,74 @@
+<div class="card">
+  <div class="card-header bg-light">
+    <h5 class="mb-0">Filtros de Búsqueda</h5>
+  </div>
+  <div class="card-body">
+    <!-- Ciudad -->
+    <div class="mb-3">
+      <label class="form-label">Ciudad</label>
+      <select class="form-select" [(ngModel)]="filters.ciudad_id" (ngModelChange)="applyFilters()">
+        <option [value]="">Todas las ciudades</option>
+        <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
+      </select>
+    </div>
+
+    <!-- Tipo de Transacción -->
+    <div class="mb-3">
+      <label class="form-label">Tipo de Transacción</label>
+      <select class="form-select" [(ngModel)]="filters.tipo_transaccion" (ngModelChange)="applyFilters()">
+        <option [value]="">Todos los tipos</option>
+        <option *ngFor="let type of transactionTypes" [value]="type.value">{{ type.label }}</option>
+      </select>
+    </div>
+
+    <!-- Rango de Precio -->
+    <div class="mb-3">
+      <label class="form-label">Precio Mínimo</label>
+      <input type="number" class="form-control"
+             [(ngModel)]="filters.precio_minimo"
+             (ngModelChange)="applyFilters()"
+             placeholder="Precio mínimo">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Precio Máximo</label>
+      <input type="number" class="form-control"
+             [(ngModel)]="filters.precio_maximo"
+             (ngModelChange)="applyFilters()"
+             placeholder="Precio máximo">
+    </div>
+
+    <!-- Habitaciones (Búsqueda múltiple) -->
+    <div class="mb-3">
+      <label class="form-label">Habitaciones</label>
+      <div class="form-check" *ngFor="let bedroom of bedroomsOptions">
+        <input class="form-check-input" type="checkbox"
+               [id]="'bedroom-' + bedroom"
+               (change)="onBedroomChange(bedroom, $event)">
+        <label class="form-check-label" [for]="'bedroom-' + bedroom">
+          {{ bedroom }} habitación(es)
+        </label>
+      </div>
+    </div>
+
+    <!-- Características (Búsqueda múltiple) -->
+    <div class="mb-3">
+      <label class="form-label">Características</label>
+      <div class="form-check" *ngFor="let feature of features">
+        <input class="form-check-input" type="checkbox"
+               [id]="'feature-' + feature.id"
+               (change)="onFeatureChange(feature.id, $event)">
+        <label class="form-check-label" [for]="'feature-' + feature.id">
+          {{ feature.name }}
+        </label>
+      </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="d-grid gap-2">
+      <button class="btn btn-outline-secondary" (click)="clearFilters()">
+        Limpiar Filtros
+      </button>
+    </div>
+  </div>
+</div>
