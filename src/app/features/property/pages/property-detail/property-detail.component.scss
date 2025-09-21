@@ -15,3 +15,16 @@
 .card-img-top {
   border-radius: 8px 8px 0 0;
 }
+
+google-map {
+  display: block;
+
+  div {
+    border-radius: 0 0 8px 8px;
+  }
+}
+
+.map-container {
+  height: 400px;
+  width: 100%;
+}

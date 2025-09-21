@@ -12,6 +12,9 @@ export interface Property {
   caracteristicas: string[];
   imagenes: PropertyImage[];
   imagen_principal: string | null;
+  latitud: number | string;
+  longitud: number | string;
+  direccion_completa: string;
   created_at: string;
   updated_at: string;
 }
